@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{LayoutPadrao}">
+
+<head>
+<meta charset="UTF-8" />
+</head>
+
+<section layout:fragment="conteudo">
+
+	<form method="POST" action="/titulos" th:object="${titulo}">
+		<div th:replace="MensagemErro"></div>
+		<div th:replace="MensagemGeral"></div>
+		<div class="container-lg card-body">
+			<div>
+				<h4 class="page-header text-center">Novo Titulo</h4>
+				<a class="btn btn-link aw-link-panel" href="/titulos">Voltar para pesquisa</a>
+			</div>
+			<div class="container-lg card card-body">
+				<input type="hidden" th:field="*{codigo}"/>
+				<div class="form-group col-md-8"
+					th:classappend="${#fields.hasErrors('descricao')} ? has-error">
+					<label for="descricao">Descrição</label> <input type="text"
+						class="form-control" id="descricao" th:field="*{descricao}">
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-2"
+						th:classappend="${#fields.hasErrors('dataVencimento')} ? has-error">
+						<label for="dataVencimento">Data de vencimento</label> <input
+							class="form-control" id="dataVencimento" th:field="*{dataVencimento}"
+								data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-language="pt-BR"
+								data-date-autoclose="true" data-date-today-highlight="true" data-date-orientation="bottom"/>
+					</div>
+					<div class="form-group col-md-2"
+						th:classappend="${#fields.hasErrors('valor')} ? has-error">
+						<label for="valor">Valor</label> 
+							<input type="text" class="form-control js-currency" id="valor" th:field="*{valor}" /> 
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-2">
+						<label for="inputState" class="botão">Status</label> 
+						<select id="inputState" class="form-control" name="status" th:field="*{status}">
+							<option th:each="status : ${todosStatusTitulo}"
+								th:value="${status}" th:text="${status.descricao}"></option>
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-sm-offset-2">
+						<button type="submit" class="btn btn-primary">Salvar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+
+</section>
+</html>
